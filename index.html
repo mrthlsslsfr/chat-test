@@ -40,12 +40,20 @@ html,body {
   </style>
   <body>
     <script type="text/javascript">
-var chat = document.querySelector("#chat>ul");
+ComfyJS.onChat = ( user, message, flags, self, extra ) => {
+  if( flags.broadcaster && command === "test" ) {
+    if( extra.sinceLastCommand.any < 100 ) {
+      console.log(
+        `The last '!test' command by any user was sent less than 100 ms ago`
+      );            
+    }
 
-ComfyJS.onChat = (user, message, flags, self, extra) => {
-        var newMessage = document.createElement("li");
-        newMessage.innerText = `${user}: ${message}`;
-        chat.append(newMessage);
+    if( extra.sinceLastCommand.user < 100 ) {
+      console.log(
+        `The last '!test' command by this specific user (as denoted by the 'user' parameter) was sent less than 100 ms ago`
+      );            
+    }
+  }
 }
 
 ComfyJS.Init("lucifereal");
