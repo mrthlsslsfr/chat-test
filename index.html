@@ -40,27 +40,15 @@ html,body {
   </style>
   <body>
     <script type="text/javascript">
-      ComfyJS.onCommand = ( user, command, message, flags, extra ) => {
-        if( flags.broadcaster && command === "test" ) {
-          console.log( "!test was typed in chat" );
-        }
-      }
-      ComfyJS.Init( "lucifereal" );
-      ComfyJS.onChat = ( user, message, flags, self, extra ) => {
-  if( flags.broadcaster && command === "test" ) {
-    if( extra.sinceLastCommand.any < 100 ) {
-      console.log(
-        `The last '!test' command by any user was sent less than 100 ms ago`
-      );            
-    }
+var chat = document.querySelector("#chat>ul");
 
-    if( extra.sinceLastCommand.user < 100 ) {
-      console.log(
-        `The last '!test' command by this specific user (as denoted by the 'user' parameter) was sent less than 100 ms ago`
-      );            
-    }
-  }
+ComfyJS.onChat = (user, message, flags, self, extra) => {
+        var newMessage = document.createElement("li");
+        newMessage.innerText = `${user}: ${message}`;
+        chat.append(newMessage);
 }
+
+ComfyJS.Init("lucifereal");
     </script>
   </body>
 </html>
