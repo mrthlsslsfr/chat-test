@@ -1,6 +1,6 @@
 <html>
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/comfy.js@latest/dist/comfy.min.js"></script>
+    <script src="comfy.min.js"></script>
   </head>
   <style>
 html,body {
@@ -46,6 +46,21 @@ html,body {
         }
       }
       ComfyJS.Init( "lucifereal" );
+      ComfyJS.onChat = ( user, message, flags, self, extra ) => {
+  if( flags.broadcaster && command === "test" ) {
+    if( extra.sinceLastCommand.any < 100 ) {
+      console.log(
+        `The last '!test' command by any user was sent less than 100 ms ago`
+      );            
+    }
+
+    if( extra.sinceLastCommand.user < 100 ) {
+      console.log(
+        `The last '!test' command by this specific user (as denoted by the 'user' parameter) was sent less than 100 ms ago`
+      );            
+    }
+  }
+}
     </script>
   </body>
 </html>
